@@ -1,26 +1,28 @@
 import mongoose from "mongoose"
 import Note from "../models/Note.js"
 
-export const getAllNotes = async (_, res) => {
+export const getAllNotes = async (req, res) => {
     try {
-        const notes = await Note.find().sort({createdAt: -1}) // the new first
-        res.status(200).json({
-            success: true,
-            message: "Success in Get ALL Notes",
-            notes
-        })
+      const { userId } = req.params
+      const notes = await Note.find({ userId }).sort({ createdAt: -1 })
 
+      res.status(200).json({
+        success: true,
+        message: `Success in getting notes for user ${userId}`,
+        notes
+      })
     } catch (error) {
-        console.error('Error in Get All Notes : ', error)
-        res.status(500).json({ message: 'Internal Server Error' })
+      console.error('Error in Get Notes By User ID : ', error)
+      res.status(500).json({ message: 'Internal Server Error' })
     }
-}
+  }
+  
 
 export const getNotesById = async (req, res) => {
     try {
         const note = await Note.findById(req.params.id)
 
-        if(!note) return res.status(404).json({ message: 'Note Not Found' })
+        if (!note) return res.status(404).json({ message: 'Note Not Found' })
 
         res.status(200).json({
             success: true,
@@ -36,8 +38,16 @@ export const getNotesById = async (req, res) => {
 
 export const createNote = async (req, res) => {
     try {
-        const { title, content } = req.body
-        const note = new Note({ title, content })
+        // Destructure userId from the request body
+        const { title, content, userId } = req.body
+
+        // Add a check to ensure userId was provided
+        if (!userId) {
+            return res.status(400).json({ message: 'User ID is required' });
+        }
+
+        // Pass the userId when creating the new note
+        const note = new Note({ title, content, userId })
 
         const newNote = await note.save()
         res.status(201).json({
@@ -46,7 +56,7 @@ export const createNote = async (req, res) => {
             newNote
         })
     } catch (error) {
-        console.error('Error in Create Note : ', error)
+        console.error('Error in Create Note fffffffffffff: ', error)
         res.status(500).json({ message: 'Internal Server Error' })
     }
 }

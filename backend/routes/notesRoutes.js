@@ -4,7 +4,7 @@ import { createNote, deleteNote, getAllNotes, getNotesById, updateNote } from '.
 const route = express.Router()
 
 
-route.get('/', getAllNotes)
+route.get('/user/:userId', getAllNotes)
 
 route.get('/:id', getNotesById)
 

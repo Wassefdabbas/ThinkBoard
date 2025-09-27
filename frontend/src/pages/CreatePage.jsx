@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import { useNavigate, Link } from "react-router";
 import { ArrowLeftIcon } from "lucide-react";
 import api from "../lib/axios";
+import { getUserId } from "../lib/user.js"; 
 
 const CreatePage = () => {
   const [title, setTitle] = useState("");
@@ -12,6 +13,7 @@ const CreatePage = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    const userId = getUserId();
     e.preventDefault();
 
     if (!title.trim() || !content.trim()) {
@@ -22,7 +24,7 @@ const CreatePage = () => {
     setLoading(true);
 
     try {
-      await api.post(`/notes`, { title, content });
+      await api.post(`/notes`, { title, content, userId  });
       toast.success("Note Created Successfully!");
       navigate("/");
     } catch (error) {

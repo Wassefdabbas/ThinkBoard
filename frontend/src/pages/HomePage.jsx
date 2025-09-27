@@ -6,17 +6,18 @@ import toast from "react-hot-toast";
 import NoteCard from "../components/NoteCard";
 import Spinner from "../components/Spinner";
 import NotesNotFound from "../components/NotesNotFound";
+import { getUserId } from '../lib/user.js'
 
 const HomePage = () => {
   const [isRateLimit, setIsRateLimit] = useState(false);
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const userId = getUserId()
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await api.get(`/notes`);
-        setNotes(res.data.notes);
+        const res = await api.get(`/notes/user/${userId}`);
+        setNotes(res.data.notes || []);
         setIsRateLimit(false);
       } catch (error) {
         console.log("Error fetching notes : ", error);
@@ -31,7 +32,7 @@ const HomePage = () => {
     };
 
     fetchNotes();
-  }, []);
+  }, [userId]);
 
   return (
     <div>

@@ -10,6 +10,11 @@ const noteSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        userId: {
+            type: String,
+            required: true,
+            index: true // Adds an index for faster queries by userId
+        },
     },
     { timestamps: true }
 )
