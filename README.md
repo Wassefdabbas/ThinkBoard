@@ -2,7 +2,7 @@
 
 Think Board is a sleek, responsive, and full-stack note-taking application built with the MERN stack. It provides a frictionless user experience by offering personalized note-taking capabilities without the need for a traditional user account, leveraging `localStorage` for a unique, browser-specific identity.
 
-[[Live Demo](https://thinkboard-dw2v.onrender.com/)](https://thinkboard-dw2v.onrender.com/)
+[Live Demo](https://thinkboard-dw2v.onrender.com/)
 
 ## Features ✨
 
@@ -35,6 +35,7 @@ A key goal of this project was to provide personalization without the friction o
 
 #### Deployment
 -   **Render** for hosting the full-stack application.
+
 
 
 
